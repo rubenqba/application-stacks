@@ -24,7 +24,7 @@ services:
   app:
     image: odoo:16
     environment:
-      - HOST=$DB_NAME
+      - HOST=db
       - USER=$DB_USER
       - PASSWORD=$DB_PASSWORD
     depends_on:
