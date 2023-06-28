@@ -1,2 +1,2 @@
 # application-stacks
-Docker stacks applications for work
+Docker stacks applications for work.
