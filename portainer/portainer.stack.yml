@@ -1,0 +1,45 @@
+version: '3.8'
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  caddy_data: {}
+  portainer_data: {}
+
+services:
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=proxy
+      - ACME_AGREE=true
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - caddy_data:/data
+
+  portainer:
+    image: portainer/portainer-ee:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - proxy
+    labels:
+      caddy: $PORTAINER_HOST
+      caddy.reverse_proxy: '{{ upstreams 9000 }}'
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
