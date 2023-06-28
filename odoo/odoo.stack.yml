@@ -23,6 +23,7 @@ services:
 
   app:
     image: odoo:16
+    command: -i base
     environment:
       - HOST=db
       - USER=$DB_USER
