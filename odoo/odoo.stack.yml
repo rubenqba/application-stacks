@@ -23,8 +23,10 @@ services:
 
   app:
     image: odoo:16
-    links:
-      - db:db
+    environment:
+      - HOST=$DB_NAME
+      - USER=$DB_USER
+      - PASSWORD=$DB_PASSWORD
     depends_on:
       - db
     networks:
