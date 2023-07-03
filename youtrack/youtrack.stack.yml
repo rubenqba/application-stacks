@@ -11,10 +11,7 @@ services:
   app: 
     image: jetbrains/youtrack:${APP_VERSION}
     volumes: 
-      - youtrack/conf:/opt/youtrack/conf
-      - youtrack/data:/opt/youtrack/data
-      - youtrack/logs:/opt/youtrack/logs
-      - youtrack/backup:/opt/youtrack/backup
+      - youtrack:/opt/youtrack
     networks:
       - proxy
     labels:
