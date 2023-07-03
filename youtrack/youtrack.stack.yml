@@ -10,7 +10,7 @@ volumes:
 services:
   app: 
     image: jetbrains/youtrack:${APP_VERSION}
-    command: configure -J-Djetbrains.youtrack.admin.restore=true # to recover admin password
+#    command: configure -J-Djetbrains.youtrack.admin.restore=true # to recover admin password
     volumes: 
       - youtrack:/opt/youtrack
     networks:
