@@ -10,7 +10,7 @@ volumes:
 services:
   app: 
     image: jetbrains/youtrack:${APP_VERSION}
-    volume: 
+    volumes: 
       - youtrack/conf:/opt/youtrack/conf
       - youtrack/data:/opt/youtrack/data
       - youtrack/logs:/opt/youtrack/logs
