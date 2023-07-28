@@ -10,7 +10,7 @@ Clone this repository in the location you want to store the service files.
 git clone https://github.com/rubenqba/application-stacks
 cd nginx-proxy-manager
 ```
-[https://gist.github.com/rubenqba/13092928231c7b6872c6acf81fa566db](gist)
+
 or you can just clone the specific `nginx-proxy-manager` directory (using this 
 [gist](https://gist.github.com/rubenqba/13092928231c7b6872c6acf81fa566db)).
 
