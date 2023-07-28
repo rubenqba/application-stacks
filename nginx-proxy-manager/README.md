@@ -33,7 +33,8 @@ BASE_DIR=$(pwd) docker stack deploy --compose-file=nginx-proxy.stack.yml lb
 To uninstall the service just execute:
 
 ```bash
-docker stack rm lb && docker wait $(docker ps -f "name=lb_proxy" -q)
+docker stack rm lb
+# wait until service is stopped
 docker volume rm nginx-data nginx-acme
 ```
 
