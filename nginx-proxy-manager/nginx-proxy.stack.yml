@@ -1,0 +1,46 @@
+version: "3.8"
+
+networks:
+  proxy:
+    driver: overlay
+    attachable: true
+    name: proxy
+
+volumes:
+  nginx-data:
+    name: nginx-data
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${BASE_DIR}/data
+  nginx-acme:
+    name: nginx-acme
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${BASE_DIR}/acme
+
+services:
+  proxy:
+    hostname: nginx-proxy
+    image: jc21/nginx-proxy-manager:latest
+    expose:
+      - '80:80'
+      - '443:443'
+      - '81:81'
+    volumes:
+      - 'nginx-data:/data'
+      - 'nginx-acme:/etc/letsencrypt'
+    networks:
+      - proxy
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role==manager"      
+      update_config:
+        delay: 10s
+      restart_policy:
+        condition: on-failure
