@@ -1,0 +1,41 @@
+version: "3.7"
+
+networks:
+  proxy:
+    name: proxy
+    driver: overlay
+    attachable: true
+    
+volumes:
+  proxy-logs:
+    name: proxy-logs
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${BASE_DIR}/data
+services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.docker.network=proxy"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--accesslog.filepath=/logs/access.log"
+    ports:
+      - 80:80
+      - 443:443
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+    volumes:
+      - proxy-logs:/logs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - proxy
+      
