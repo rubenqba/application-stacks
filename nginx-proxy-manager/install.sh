@@ -35,8 +35,8 @@ BASE=$(pwd)
 # create nginx proxy manager service
 (echo -en 'Create service\t...' && \
   docker service create \
-    -p 1080:80 \
-    -p 1443:443 \
+    -p 80:80 \
+    -p 443:443 \
     -p 81:81 \
     --name nginx-proxy \
     --constraint 'node.role == manager' \
